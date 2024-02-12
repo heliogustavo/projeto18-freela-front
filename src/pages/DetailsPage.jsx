@@ -11,9 +11,9 @@ export default function DetailsPage() {
     axios.get(`${import.meta.env.VITE_API_URL}/miaudelo/${id}`)
       .then(response => {
         setCatDetails(response.data);
-      })
+      }) 
       .catch(error => {
-        console.error("Erro ao buscar detalhes do gato:", error);
+        console.error("Erro ao buscar detalhes desse gato:", error);
       });
   }, [id]);
 
