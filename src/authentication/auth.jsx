@@ -5,12 +5,10 @@ import AuthContext from "../contexts/AuthContext"
 
 export function useSignUp() {
     const navigate = useNavigate()
-    const descrição = 23232323232323232332323
     return (body) => {
         axios.post(`${import.meta.env.VITE_API_URL}/signup`, body)
             .then(() => {
                 navigate("/")
-                console.log(descrição)
             }
             )
             .catch(err => alert(err.response.data))
@@ -19,15 +17,12 @@ export function useSignUp() {
 
 export function useLogin() {
     const navigate = useNavigate()
-    const { setToken, setUserName } = useContext(AuthContext)
 
     return (body) => {
         axios.post(`${import.meta.env.VITE_API_URL}/signin`, body)
             .then(res => {
-                setToken(res.data.token)
-                setUserName(res.data.userName)
-                localStorage.setItem("token", res.data.token)
-                localStorage.setItem("userName", res.data.userName)
+                console.log(res.data.userId, "Id tá aqui")
+                localStorage.setItem("userId", res.data.userId)
                 navigate("/home")
             })
             .catch((err) => {
@@ -36,4 +31,3 @@ export function useLogin() {
             });
     }
 }
-

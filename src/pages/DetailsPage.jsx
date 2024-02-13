@@ -22,7 +22,7 @@ export default function DetailsPage() {
       {catDetails && (
         <>
           <ContainerIMG>
-            <ImgCatDetails src={catDetails.imageUrl} alt="Gato" />
+            <ImgCatDetails src={catDetails.photoLink} alt="Gato" />
           </ContainerIMG>
           <DetailsCat>
             <h3>Descrição: </h3>

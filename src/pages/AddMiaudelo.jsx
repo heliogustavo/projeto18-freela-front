@@ -5,7 +5,8 @@ import { addFormMiaudelo } from "../hooks/addFormMiaudelo";
 import { useNavigate } from "react-router-dom";
 
 export default function AddMiaudelo() {
-  const { form, handleForm } = useForm({ photoLink: "", features: ""});
+  const userId = localStorage.getItem("userId")
+  const { form, handleForm } = useForm({ photoLink: "", features: "", userId});
   const navigate = useNavigate();
   const addMiaudelo = addFormMiaudelo(navigate);
 
