@@ -21,17 +21,28 @@ export default function DetailsPage() {
     <AllPage>
       {catDetails && (
         <>
+          <InstructionMessage>
+            Se você é o tutor deste Miaudelo, selecione a CheckBox dele na Home Page quando quiser que ele tire férias :)
+          </InstructionMessage>
           <ContainerIMG>
             <ImgCatDetails src={catDetails.photoLink} alt="Gato" />
           </ContainerIMG>
-          <DetailsCat>
-            <h3>Descrição: </h3>
-            <p>{catDetails.features}</p>
-          </DetailsCat>
-          <DetailsCat>
-            <h3>Contato do Tutor:</h3>
-            <p>{catDetails.numberPhone}</p>
-          </DetailsCat>
+          {!catDetails.available ? (
+            <>
+              <DetailsCat>
+                <h3>Descrição: </h3>
+                <p>{catDetails.features}</p>
+              </DetailsCat>
+              <DetailsCat>
+                <h3>Contato do Tutor:</h3>
+                <p>{catDetails.numberPhone}</p>
+              </DetailsCat>
+            </>
+          ) : (
+            <DetailsCat>
+              <h3>Este Miaudelo não está disponível :/</h3>
+            </DetailsCat>
+          )}
         </>
       )}
     </AllPage>
@@ -46,12 +57,20 @@ const AllPage = styled.article`
   margin-top: 20px;
 `;
 
+const InstructionMessage = styled.h3`
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
+  color: #4b4200;
+  text-align: center;
+  margin-bottom: 20px;
+`;
+
 const ContainerIMG = styled.article`
   width: 250px;
   height: 160px;
-  margin-top: 25px;
-  border-radius: 16px;
   margin-bottom: 25px;
+  border-radius: 16px;
+  position: relative; /* Para posicionar a imagem */
 `;
 
 const DetailsCat = styled.article`

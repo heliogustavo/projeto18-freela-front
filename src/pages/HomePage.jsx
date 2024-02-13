@@ -12,13 +12,31 @@ export default function HomePage() {
     useEffect(() => {
         axios.get(`${import.meta.env.VITE_API_URL}/miaudeloslist`)
             .then(response => {
-                setCats(response.data);
-                console.log(response.data);
+                const updatedCats = response.data.map(cat => ({
+                    ...cat,
+                    statusPhoto: cat.available
+                }));
+                setCats(updatedCats);
+                console.log(updatedCats);
             })
             .catch(error => {
                 console.error('Erro ao buscar dados dos gatos:', error);
             });
     }, []);
+
+    const handleCheckBoxClick = (id) => {
+        const updatedCats = cats.map(cat => {
+            if (cat.id === id) {
+                const updatedStatus = !cat.statusPhoto;
+                axios.put(`${import.meta.env.VITE_API_URL}/editstatusphoto/${id}`, { userId: tokenId, statusPhoto: updatedStatus })
+                    .then(response => alert('Status de Disponibilidade do Miaudelo atualizada!'))
+                    .catch(error => console.error('Erro ao atualizar status:', error));
+                return { ...cat, statusPhoto: updatedStatus };
+            }
+            return cat;
+        });
+        setCats(updatedCats);
+    };
 
     return (
         <>
@@ -26,11 +44,16 @@ export default function HomePage() {
                 <Link to={"/addmiaudelo"}>
                     <LogoImg src={logoIMG} alt="Logo" />
                 </Link>
+                <h1>Clique no Miaudelo que desejar saber mais :)</h1>
                 {cats.map(cat => (
                     <ContainerOneCat key={cat.id}>
                         {cat.userId === tokenId && (
                             <CheckBoxWrapper>
-                                <StyledCheckBox type="checkbox" />
+                                <StyledCheckBox
+                                    type="checkbox"
+                                    checked={cat.statusPhoto}
+                                    onChange={() => handleCheckBoxClick(cat.id)}
+                                />
                             </CheckBoxWrapper>
                         )}
                         <Link to={`/details/${cat.id}`}>
@@ -57,6 +80,14 @@ const ContainerPrincipal = styled.article`
     flex-direction: column;
     align-items: center;
     margin: auto; 
+    h1{
+        font-weight: 700;
+        font-size: 17px;
+        line-height: 18px;
+        text-decoration: none;
+        padding-top: 30px;
+        color : #4b4200;
+    }
 `;
 
 const ContainerOneCat = styled.article`
@@ -89,7 +120,7 @@ const StyledCheckBox = styled.input`
     height: 20px;
     border: 2px solid #333;
     border-radius: 4px;
-    background-color: #fff;
+    background-color: ${({ checked }) => (checked ? '#009688' : '#fff')};
     box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
     
     &:checked {
