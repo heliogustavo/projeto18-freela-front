@@ -49,7 +49,7 @@ export default function HomePage() {
                             <CheckBoxWrapper>
                                 <StyledCheckBox
                                     type="checkbox"
-                                    checked={cat.statusPhoto}
+                                    checked={!cat.statusPhoto}
                                     onChange={() => handleCheckBoxClick(cat.id)}
                                 />
                             </CheckBoxWrapper>
