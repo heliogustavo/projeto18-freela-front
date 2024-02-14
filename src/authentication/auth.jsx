@@ -15,14 +15,17 @@ export function useSignUp() {
     }
 }
 
-export function useLogin() {
-    const navigate = useNavigate()
+export function useLogin(setTokenId) {
+    const navigate = useNavigate();
 
-    return (body) => {
+    return (body, handleTokenId) => { 
         axios.post(`${import.meta.env.VITE_API_URL}/signin`, body)
             .then(res => {
-                console.log(res.data.userId, "Id tá aqui")
-                localStorage.setItem("userId", res.data.userId)
+                console.log(res.data.userId, "Id tá aqui");
+                localStorage.setItem("userId", res.data.userId);
+                handleTokenId(res.data.userId)
+                setTokenId(res.data.userId);
+
                 navigate("/home")
             })
             .catch((err) => {

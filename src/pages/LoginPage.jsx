@@ -4,14 +4,19 @@ import { useLogin } from "../authentication/auth";
 import styled from "styled-components";
 import logoIMG from "../assets/img/logoIMG.png"; 
 
-export default function LoginPage() {
+export default function LoginPage({ setTokenId }) {
   const { form, handleForm } = useForm({ email: "", password: "" });
-  const login = useLogin();
+  const login = useLogin(setTokenId);
 
   function submitForm(e) {
     e.preventDefault();
-    login(form);
+    login(form, handleTokenId);
   }
+
+  const handleTokenId = (newUserId) => {
+    setTokenId(newUserId);
+    localStorage.setItem("userId", newUserId);
+};
 
   return (
     <LoginPageContainer>

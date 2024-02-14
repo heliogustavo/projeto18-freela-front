@@ -17,7 +17,6 @@ export default function HomePage() {
                     statusPhoto: cat.available
                 }));
                 setCats(updatedCats);
-                console.log(updatedCats);
             })
             .catch(error => {
                 console.error('Erro ao buscar dados dos gatos:', error);
@@ -37,7 +36,6 @@ export default function HomePage() {
         });
         setCats(updatedCats);
     };
-
     return (
         <>
             <ContainerPrincipal>
